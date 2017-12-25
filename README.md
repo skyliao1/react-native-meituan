@@ -1,5 +1,5 @@
 # MeiTuan App Write In latest React-Native(0.50.1)
-
+这是转载的其他人的源代码
 Github：https://github.com/huanxsd/MeiTuan1
 
 简书：http://www.jianshu.com/p/9211f42d5c25
