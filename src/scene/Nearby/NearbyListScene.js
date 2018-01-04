@@ -75,7 +75,7 @@ class NearbyListScene extends PureComponent {
                 netdata:temp
             })
             setTimeout(() => {
-                this.listView.endRefreshing(RefreshState.NoMoreData) //这里是没有数据了则这则为NoMoreData 依然有数据则为Idle根据服务器返回的数据动态判断  RefreshListView那个组件没有任何问题
+                this.listView.endRefreshing(RefreshState.NoMoreData) //这里是没有数据了则这则为NoMoreData 依然有数据则为Idle根据服务器返回的数据动态判断  RefreshListView那个组件没有任何问题1
             }, 500);
         } catch (error) {
             this.listView.endRefreshing(RefreshState.Failure)
