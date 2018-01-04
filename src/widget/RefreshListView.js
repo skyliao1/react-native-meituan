@@ -34,6 +34,7 @@ class RefreshListView extends PureComponent {
     }
 
     startHeaderRefreshing() {
+
         this.setState({ headerState: RefreshState.Refreshing })
 
         this.props.onHeaderRefresh && this.props.onHeaderRefresh()
@@ -80,7 +81,7 @@ class RefreshListView extends PureComponent {
         }
 
         this.setState({
-            headerState: RefreshState.Idle,
+            headerState: RefreshState.Idle,//这里如果没有数据了可以设置
             footerState: footerState
         })
     }
@@ -94,6 +95,7 @@ class RefreshListView extends PureComponent {
     }
 
     onHeaderRefresh() {
+
         if (this.shouldStartHeaderRefreshing()) {
             this.startHeaderRefreshing();
         }
@@ -113,7 +115,11 @@ class RefreshListView extends PureComponent {
                 refreshControl={
                     <RefreshControl
                         refreshing={this.state.headerState == RefreshState.Refreshing}
-                        onRefresh={() => this.onHeaderRefresh()}
+                        onRefresh={() => {
+
+                            this.onHeaderRefresh()
+                        }
+                        }
                         tintColor='gray'
                     />
                 }

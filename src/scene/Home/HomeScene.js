@@ -173,6 +173,7 @@ class HomeScene extends PureComponent {
     }
 
     render() {
+        console.log("fsdfsd3243");
         return (
             <View style={styles.container}>
                 <FlatList
