@@ -36,11 +36,14 @@ class NearbyListScene extends PureComponent {
         this.state = {
             dataSource: ds.cloneWithRows([]),
             typeIndex: 0,
+            netdata:[]
         }
     }
 
     componentDidMount() {
+
         this.listView.startHeaderRefreshing();
+
     }
 
     async requestData() {
@@ -48,8 +51,8 @@ class NearbyListScene extends PureComponent {
             let response = await fetch(api.recommend)
             let json = await response.json()
 
-            console.log(JSON.stringify(json));
-
+            //console.log(JSON.stringify(json));
+            //console.log(json.tracks);
             let dataList = json.data.map((info) => {
                 return {
                     id: info.id,
@@ -60,14 +63,19 @@ class NearbyListScene extends PureComponent {
                 }
             })
 
+
+
             // 偷懒，用同一个测试接口获取数据，然后打乱数组，造成数据来自不同接口的假象 >.<
             dataList.sort(() => { return 0.5 - Math.random() })
+            let temp=this.state.netdata;
 
+            temp=temp.concat(dataList);
             this.setState({
-                dataSource: this.state.dataSource.cloneWithRows(dataList)
+                dataSource: this.state.dataSource.cloneWithRows(temp),
+                netdata:temp
             })
             setTimeout(() => {
-                this.listView.endRefreshing(RefreshState.NoMoreData)
+                this.listView.endRefreshing(RefreshState.NoMoreData) //这里是没有数据了则这则为NoMoreData 依然有数据则为Idle根据服务器返回的数据动态判断  RefreshListView那个组件没有任何问题
             }, 500);
         } catch (error) {
             this.listView.endRefreshing(RefreshState.Failure)
@@ -99,7 +107,13 @@ class NearbyListScene extends PureComponent {
                         }}
                     />
                 }
-                onHeaderRefresh={() => this.requestData()}
+                onHeaderRefresh={() => {
+
+                    this.requestData()
+                }}
+                onFooterRefresh={()=>{
+                    this.requestData()
+                }}
             />
         );
     }
